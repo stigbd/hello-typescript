@@ -2,19 +2,12 @@ import express, { Request, Response } from 'express';
 import { Animal } from './models/Animal';
 import { Cat } from './models/Cat';
 import { Dog } from './models/Dog';
+import { animals, AnimalWithType } from './store/animals';
 
-const app = express();
+const app: express.Express = express();
 const port = 3000;
 
 app.use(express.json());
-
-// In-memory storage for animals
-type AnimalWithType = (Cat & { type: 'cat' }) | (Dog & { type: 'dog' });
-
-let animals: AnimalWithType[] = [
-  { type: "cat", name: "Whiskers", age: 3, livesLeft: 7, speak: () => "Meow" },
-  { type: "dog", name: "Buddy", age: 5, breed: "Labrador", speak: () => "Woof" },
-];
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).send('Hello, World!');
@@ -76,6 +69,6 @@ app.post('/animals', (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+
+
+export default app;

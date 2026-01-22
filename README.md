@@ -16,6 +16,14 @@ For live reload during development (auto-restart on code changes):
 pnpm run dev
 ```
 
+## Running Tests
+
+To run the automated tests for the API endpoints:
+
+```sh
+pnpm test
+```
+
 ## Project Structure
 
 ```
