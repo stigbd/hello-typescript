@@ -15,12 +15,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // GET /animals - list all animals
 app.get('/animals', (req: Request, res: Response) => {
-  // Remove the speak function from the response for serialization
-  const animalsWithoutSpeak = animals.map(a => {
-    const { speak, ...rest } = a;
-    return rest;
-  });
-  res.json(animalsWithoutSpeak);
+  res.json(animals);
 });
 
 // GET /animals/:name - get animal by name
@@ -28,8 +23,7 @@ app.get('/animals/:name', (req: Request, res: Response) => {
   const name = req.params.name;
   const animal = animals.find(a => a.name === name);
   if (animal) {
-    const { speak, ...rest } = animal;
-    res.json(rest);
+    res.json(animal);
   } else {
     res.status(404).json({ error: "Animal not found" });
   }
@@ -45,25 +39,21 @@ app.post('/animals', (req: Request, res: Response) => {
     if (typeof data.name === 'string' && typeof data.age === 'number' && typeof data.livesLeft === 'number') {
       newAnimal = {
         type: 'cat',
-        ...data,
-        speak: () => "Meow"
+        ...data
       };
     }
   } else if (type === 'dog') {
     if (typeof data.name === 'string' && typeof data.age === 'number' && typeof data.breed === 'string') {
       newAnimal = {
         type: 'dog',
-        ...data,
-        speak: () => "Woof"
+        ...data
       };
     }
   }
 
   if (newAnimal) {
     animals.push(newAnimal);
-    // Remove speak function before sending response
-    const { speak, ...rest } = newAnimal;
-    res.status(201).json(rest);
+    res.status(201).json(newAnimal);
   } else {
     res.status(400).json({ error: "Invalid animal data" });
   }

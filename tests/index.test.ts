@@ -80,5 +80,38 @@ describe('API Endpoints', () => {
       expect(res.status).toBe(400);
       expect(res.body).toEqual({ error: "Invalid animal data" });
     });
+
+    it('should return 400 for invalid dog data (missing breed)', async () => {
+      const res = await request(app)
+        .post('/animals')
+        .send({ type: 'dog', name: 'InvalidDog', age: 4 }); // Missing breed
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: "Invalid animal data" });
+    });
+
+    it('should guarantee coverage for else if (type === "dog") branch with invalid data', async () => {
+      // This test ensures the branch is entered but fails validation
+      const res = await request(app)
+        .post('/animals')
+        .send({ type: 'asdf', name: 123, age: 'not-a-number', breed: 456 }); // All fields wrong type
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: "Invalid animal data" });
+    });
+
+    it('should return 400 for invalid dog data (missing age)', async () => {
+      const res = await request(app)
+        .post('/animals')
+        .send({ type: 'dog', name: 'InvalidDog', breed: 'Bulldog' }); // Missing age
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: "Invalid animal data" });
+    });
+
+    it('should return 400 for invalid dog data (missing name)', async () => {
+      const res = await request(app)
+        .post('/animals')
+        .send({ type: 'dog', age: 4, breed: 'Bulldog' }); // Missing name
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: "Invalid animal data" });
+    });
   });
 });
