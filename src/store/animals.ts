@@ -1,11 +1,7 @@
-import type { Cat } from "../models/Cat";
-import type { Dog } from "../models/Dog";
-
-// Type for animals with their specific type tag
-export type AnimalWithType = (Cat & { type: "cat" }) | (Dog & { type: "dog" });
+import type { Animal } from "../models/animal";
 
 // In-memory storage for animals
-export let animals: AnimalWithType[] = [
+export let animals: Animal[] = [
 	{ type: "cat", name: "Whiskers", age: 3, livesLeft: 7 },
 	{ type: "dog", name: "Buddy", age: 5, breed: "Labrador" },
 ];

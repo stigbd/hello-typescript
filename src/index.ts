@@ -1,7 +1,8 @@
 import express, { type Request, type Response } from "express";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { type AnimalWithType, animals } from "./store/animals";
+import { type Animal, AnimalSchema } from "./models/animal";
+import { animals } from "./store/animals";
 
 const swaggerOptions = {
 	definition: {
@@ -129,40 +130,20 @@ app.get("/animals/:name", (req: Request, res: Response) => {
  *                   example: Invalid animal data
  */
 app.post("/animals", (req: Request, res: Response) => {
-	const { type, ...data } = req.body;
+	// Validate the entire animal object using Zod
+	const result = AnimalSchema.safeParse(req.body);
 
-	let newAnimal: AnimalWithType | null = null;
-
-	if (type === "cat") {
-		if (
-			typeof data.name === "string" &&
-			typeof data.age === "number" &&
-			typeof data.livesLeft === "number"
-		) {
-			newAnimal = {
-				type: "cat",
-				...data,
-			};
-		}
-	} else if (type === "dog") {
-		if (
-			typeof data.name === "string" &&
-			typeof data.age === "number" &&
-			typeof data.breed === "string"
-		) {
-			newAnimal = {
-				type: "dog",
-				...data,
-			};
-		}
+	if (!result.success) {
+		// Return detailed validation errors
+		return res.status(400).json({
+			error: "Invalid animal data",
+			details: result.error.format(),
+		});
 	}
 
-	if (newAnimal) {
-		animals.push(newAnimal);
-		res.status(201).location(`/animals/${newAnimal.name}`).send();
-	} else {
-		res.status(400).json({ error: "Invalid animal data" });
-	}
+	const newAnimal: Animal = result.data;
+	animals.push(newAnimal);
+	res.status(201).location(`/animals/${newAnimal.name}`).send();
 });
 
 /**
@@ -186,6 +167,8 @@ app.post("/animals", (req: Request, res: Response) => {
  *           type: number
  *         livesLeft:
  *           type: number
+ *           minimum: 0
+ *           maximum: 9
  *     Dog:
  *       type: object
  *       required:

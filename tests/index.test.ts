@@ -84,7 +84,8 @@ describe("API Endpoints", () => {
 				.post("/animals")
 				.send({ type: "cat", name: "InvalidCat" }); // Missing age and livesLeft
 			expect(res.status).toBe(400);
-			expect(res.body).toEqual({ error: "Invalid animal data" });
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
 		});
 
 		it("should return 400 for invalid dog data (missing breed)", async () => {
@@ -92,16 +93,17 @@ describe("API Endpoints", () => {
 				.post("/animals")
 				.send({ type: "dog", name: "InvalidDog", age: 4 }); // Missing breed
 			expect(res.status).toBe(400);
-			expect(res.body).toEqual({ error: "Invalid animal data" });
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
 		});
 
-		it('should guarantee coverage for else if (type === "dog") branch with invalid data', async () => {
-			// This test ensures the branch is entered but fails validation
+		it("should return 400 for invalid type", async () => {
 			const res = await request(app)
 				.post("/animals")
-				.send({ type: "asdf", name: 123, age: "not-a-number", breed: 456 }); // All fields wrong type
+				.send({ type: "bird", name: "Tweety", age: 2 }); // Invalid type
 			expect(res.status).toBe(400);
-			expect(res.body).toEqual({ error: "Invalid animal data" });
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
 		});
 
 		it("should return 400 for invalid dog data (missing age)", async () => {
@@ -109,7 +111,8 @@ describe("API Endpoints", () => {
 				.post("/animals")
 				.send({ type: "dog", name: "InvalidDog", breed: "Bulldog" }); // Missing age
 			expect(res.status).toBe(400);
-			expect(res.body).toEqual({ error: "Invalid animal data" });
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
 		});
 
 		it("should return 400 for invalid dog data (missing name)", async () => {
@@ -117,7 +120,58 @@ describe("API Endpoints", () => {
 				.post("/animals")
 				.send({ type: "dog", age: 4, breed: "Bulldog" }); // Missing name
 			expect(res.status).toBe(400);
-			expect(res.body).toEqual({ error: "Invalid animal data" });
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
+		});
+
+		it("should return 400 for animal with empty name", async () => {
+			const res = await request(app)
+				.post("/animals")
+				.send({ type: "cat", name: "", age: 1, livesLeft: 9 }); // Empty name
+			expect(res.status).toBe(400);
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
+		});
+
+		it("should return 400 for cat with too many lives", async () => {
+			const res = await request(app)
+				.post("/animals")
+				.send({ type: "cat", name: "ImmortalCat", age: 1, livesLeft: 10 }); // Too many lives
+			expect(res.status).toBe(400);
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
+		});
+
+		it("should return 400 for cat with negative lives", async () => {
+			const res = await request(app)
+				.post("/animals")
+				.send({ type: "cat", name: "DeadCat", age: 1, livesLeft: -1 }); // Negative lives
+			expect(res.status).toBe(400);
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
+		});
+
+		it("should return 400 for animal with negative age", async () => {
+			const res = await request(app)
+				.post("/animals")
+				.send({ type: "dog", name: "TimeTraveler", age: -5, breed: "Beagle" }); // Negative age
+			expect(res.status).toBe(400);
+			expect(res.body.error).toBe("Invalid animal data");
+			expect(res.body.details).toBeDefined();
+		});
+	});
+
+	describe("Type Guards", () => {
+		it("should correctly identify a cat using isCat", async () => {
+			const { isCat } = await import("../src/models/animal");
+			const res = await request(app).get("/animals/Whiskers");
+			expect(isCat(res.body)).toBe(true);
+		});
+
+		it("should correctly identify a dog using isDog", async () => {
+			const { isDog } = await import("../src/models/animal");
+			const res = await request(app).get("/animals/Buddy");
+			expect(isDog(res.body)).toBe(true);
 		});
 	});
 });
