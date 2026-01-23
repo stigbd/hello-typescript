@@ -24,6 +24,12 @@ To run the automated tests for the API endpoints:
 pnpm test
 ```
 
+To run the tests with coverage reporting:
+
+```sh
+pnpm run test:coverage
+```
+
 ## Project Structure
 
 ```

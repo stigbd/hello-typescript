@@ -55,7 +55,8 @@ describe('API Endpoints', () => {
         .post('/animals')
         .send(newCat);
       expect(res.status).toBe(201);
-      expect(res.body).toEqual({ type: 'cat', name: 'NewCat', age: 1, livesLeft: 9 });
+      expect(res.body).toEqual({});
+      expect(res.header).toHaveProperty('location', '/animals/NewCat');
       // Verify the animal was added
       const getRes = await request(app).get('/animals/NewCat');
       expect(getRes.body).toEqual({ type: 'cat', name: 'NewCat', age: 1, livesLeft: 9 });
@@ -67,7 +68,8 @@ describe('API Endpoints', () => {
         .post('/animals')
         .send(newDog);
       expect(res.status).toBe(201);
-      expect(res.body).toEqual({ type: 'dog', name: 'NewDog', age: 2, breed: 'Poodle' });
+      expect(res.body).toEqual({});
+      expect(res.header).toHaveProperty('location', '/animals/NewDog');
       // Verify the animal was added
       const getRes = await request(app).get('/animals/NewDog');
       expect(getRes.body).toEqual({ type: 'dog', name: 'NewDog', age: 2, breed: 'Poodle' });
