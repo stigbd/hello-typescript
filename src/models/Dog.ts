@@ -1,5 +1,5 @@
 import type { Animal } from "./Animal";
 
-export interface Dog extends Omit<Animal, "speak"> {
+export interface Dog extends Animal {
 	breed: string;
 }
