@@ -1,36 +1,32 @@
-import express, { Request, Response } from 'express';
-import { Animal } from './models/Animal';
-import { Cat } from './models/Cat';
-import { Dog } from './models/Dog';
-import { animals, AnimalWithType } from './store/animals';
-
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import express, { type Request, type Response } from "express";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { type AnimalWithType, animals } from "./store/animals";
 
 const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Animals API',
-      version: '1.0.0',
-      description: 'API for managing animals (cats and dogs)'
-    },
-  },
-  apis: ['./src/index.ts'],
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "Animals API",
+			version: "1.0.0",
+			description: "API for managing animals (cats and dogs)",
+		},
+	},
+	apis: ["./src/index.ts"],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 const app: express.Express = express();
-const port = 3000;
+const _port = 3000;
 
 app.use(express.json());
 
 // Serve OpenAPI docs at /api-docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get('/', (req: Request, res: Response) => {
-  res.status(200).send('Hello, World!');
+app.get("/", (_req: Request, res: Response) => {
+	res.status(200).send("Hello, World!");
 });
 
 // GET /animals - list all animals
@@ -51,8 +47,8 @@ app.get('/', (req: Request, res: Response) => {
  *                   - $ref: '#/components/schemas/Cat'
  *                   - $ref: '#/components/schemas/Dog'
  */
-app.get('/animals', (req: Request, res: Response) => {
-  res.json(animals);
+app.get("/animals", (_req: Request, res: Response) => {
+	res.json(animals);
 });
 
 // GET /animals/:name - get animal by name
@@ -88,14 +84,14 @@ app.get('/animals', (req: Request, res: Response) => {
  *                   type: string
  *                   example: Animal not found
  */
-app.get('/animals/:name', (req: Request, res: Response) => {
-  const name = req.params.name;
-  const animal = animals.find(a => a.name === name);
-  if (animal) {
-    res.json(animal);
-  } else {
-    res.status(404).json({ error: "Animal not found" });
-  }
+app.get("/animals/:name", (req: Request, res: Response) => {
+	const name = req.params.name;
+	const animal = animals.find((a) => a.name === name);
+	if (animal) {
+		res.json(animal);
+	} else {
+		res.status(404).json({ error: "Animal not found" });
+	}
 });
 
 // POST /animals - add a new animal (expects type: 'cat' or 'dog')
@@ -132,36 +128,42 @@ app.get('/animals/:name', (req: Request, res: Response) => {
  *                   type: string
  *                   example: Invalid animal data
  */
-app.post('/animals', (req: Request, res: Response) => {
-  const { type, ...data } = req.body;
+app.post("/animals", (req: Request, res: Response) => {
+	const { type, ...data } = req.body;
 
-  let newAnimal: AnimalWithType | null = null;
+	let newAnimal: AnimalWithType | null = null;
 
-  if (type === 'cat') {
-    if (typeof data.name === 'string' && typeof data.age === 'number' && typeof data.livesLeft === 'number') {
-      newAnimal = {
-        type: 'cat',
-        ...data
-      };
-    }
-  } else if (type === 'dog') {
-    if (typeof data.name === 'string' && typeof data.age === 'number' && typeof data.breed === 'string') {
-      newAnimal = {
-        type: 'dog',
-        ...data
-      };
-    }
-  }
+	if (type === "cat") {
+		if (
+			typeof data.name === "string" &&
+			typeof data.age === "number" &&
+			typeof data.livesLeft === "number"
+		) {
+			newAnimal = {
+				type: "cat",
+				...data,
+			};
+		}
+	} else if (type === "dog") {
+		if (
+			typeof data.name === "string" &&
+			typeof data.age === "number" &&
+			typeof data.breed === "string"
+		) {
+			newAnimal = {
+				type: "dog",
+				...data,
+			};
+		}
+	}
 
-  if (newAnimal) {
-    animals.push(newAnimal);
-    res.status(201).location(`/animals/${newAnimal.name}`).send();
-  } else {
-    res.status(400).json({ error: "Invalid animal data" });
-  }
+	if (newAnimal) {
+		animals.push(newAnimal);
+		res.status(201).location(`/animals/${newAnimal.name}`).send();
+	} else {
+		res.status(400).json({ error: "Invalid animal data" });
+	}
 });
-
-
 
 /**
  * @openapi

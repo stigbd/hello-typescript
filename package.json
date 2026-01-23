@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@biomejs/biome": "2.3.11",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.0.10",
@@ -19,7 +20,9 @@
     "start": "node dist/server.js",
     "dev": "nodemon --watch src --exec \"ts-node\" src/server.ts",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "format": "biome format --write ./src ./tests",
+    "lint": "biome check ./src ./tests"
   },
   "dependencies": {
     "swagger-jsdoc": "^6.2.8",
