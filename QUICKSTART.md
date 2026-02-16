@@ -92,9 +92,10 @@ Build outputs:
 
 ```
 hello-typescript/
-├── packages/
+├── apps/          # Deployable applications
 │   ├── api/       # Express REST API
-│   ├── web/       # React frontend
+│   └── web/       # React frontend
+├── packages/      # Shared, reusable packages
 │   └── shared/    # Shared TypeScript types
 └── package.json   # Root workspace config
 ```

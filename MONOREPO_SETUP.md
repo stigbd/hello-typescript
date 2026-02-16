@@ -14,26 +14,27 @@ This document explains the monorepo structure and how to work with it effectivel
 
 ## Overview
 
-This project uses **pnpm workspaces** to manage a TypeScript monorepo containing:
+This project uses **pnpm workspaces** to manage a TypeScript monorepo with a clear separation:
 
-- **API Package**: Express.js REST API backend
-- **Web Package**: React frontend with Vite
-- **Shared Package**: Common TypeScript types
+- **Apps**: Deployable applications (API server, Web frontend)
+- **Packages**: Shared, reusable libraries (types, utilities, configs)
 
-### Why Monorepo?
+### Why Monorepo with Apps/Packages Structure?
 
-- ✅ **Code Sharing**: Share types between frontend and backend
+- ✅ **Clear Separation**: Apps are deployable, packages are imported
+- ✅ **Code Sharing**: Share types and utilities across applications
 - ✅ **Consistent Tooling**: Same linting, formatting, and TypeScript configs
 - ✅ **Atomic Changes**: Update API and frontend together
 - ✅ **Simplified Dependencies**: pnpm deduplicates shared dependencies
 - ✅ **Easy Testing**: Test all packages together
+- ✅ **Scalability**: Easy to add new apps or shared packages
 
 ## Architecture
 
 ```
 hello-typescript/
-├── packages/
-│   ├── api/                          # Backend API
+├── apps/                            # Deployable applications
+│   ├── api/                         # Backend API server
 │   │   ├── src/
 │   │   │   ├── index.ts             # Express app setup
 │   │   │   ├── server.ts            # Server entry point
@@ -46,20 +47,21 @@ hello-typescript/
 │   │   ├── tsconfig.json
 │   │   └── jest.config.js
 │   │
-│   ├── web/                         # Frontend React app
-│   │   ├── src/
-│   │   │   ├── main.tsx             # React entry point
-│   │   │   ├── App.tsx              # Main App component
-│   │   │   ├── App.css              # App styles
-│   │   │   └── index.css            # Global styles
-│   │   ├── public/                  # Static assets
-│   │   ├── dist/                    # Vite build output
-│   │   ├── index.html               # HTML template
-│   │   ├── package.json
-│   │   ├── tsconfig.json
-│   │   └── vite.config.ts
-│   │
-│   └── shared/                      # Shared code
+│   └── web/                         # Frontend React app
+│       ├── src/
+│       │   ├── main.tsx             # React entry point
+│       │   ├── App.tsx              # Main App component
+│       │   ├── App.css              # App styles
+│       │   └── index.css            # Global styles
+│       ├── public/                  # Static assets
+│       ├── dist/                    # Vite build output
+│       ├── index.html               # HTML template
+│       ├── package.json
+│       ├── tsconfig.json
+│       └── vite.config.ts
+│
+├── packages/                        # Shared, reusable packages
+│   └── shared/                      # Shared TypeScript types
 │       ├── src/
 │       │   ├── types.ts             # Common TypeScript types
 │       │   └── index.ts             # Barrel export
@@ -92,12 +94,14 @@ hello-typescript/
 - `@asteasolutions/zod-to-openapi` - OpenAPI generation
 - `swagger-ui-express` - API documentation UI
 
+**Location**: `apps/api/`
+
 **Scripts**:
 ```bash
-pnpm --filter @hello-typescript/api dev      # Development with hot reload
-pnpm --filter @hello-typescript/api build    # Build TypeScript
-pnpm --filter @hello-typescript/api test     # Run Jest tests
-pnpm --filter @hello-typescript/api start    # Run production build
+pnpm api:dev      # Development with hot reload
+pnpm api:build    # Build TypeScript
+pnpm api:test     # Run Jest tests
+pnpm api:start    # Run production build
 ```
 
 ### @hello-typescript/web
@@ -115,11 +119,13 @@ pnpm --filter @hello-typescript/api start    # Run production build
 - `vite` - Build tool
 - `@vitejs/plugin-react` - React support for Vite
 
+**Location**: `apps/web/`
+
 **Scripts**:
 ```bash
-pnpm --filter @hello-typescript/web dev      # Dev server on port 5173
-pnpm --filter @hello-typescript/web build    # Production build
-pnpm --filter @hello-typescript/web preview  # Preview production build
+pnpm web:dev      # Dev server on port 5173
+pnpm web:build    # Production build
+pnpm web:preview  # Preview production build
 ```
 
 ### @hello-typescript/shared
@@ -137,10 +143,12 @@ pnpm --filter @hello-typescript/web preview  # Preview production build
 - `Dog` - Dog interface with breed
 - `AnimalType` - Union type of Cat | Dog
 
+**Location**: `packages/shared/`
+
 **Scripts**:
 ```bash
-pnpm --filter @hello-typescript/shared build  # Build TypeScript declarations
-pnpm --filter @hello-typescript/shared dev    # Watch mode
+pnpm shared:build  # Build TypeScript declarations
+pnpm shared:dev    # Watch mode
 ```
 
 ## Workspace Configuration
@@ -149,22 +157,26 @@ pnpm --filter @hello-typescript/shared dev    # Watch mode
 
 ```yaml
 packages:
-  - 'packages/*'
+  - "apps/*"
+  - "packages/*"
 ```
 
-This tells pnpm to treat all directories under `packages/` as workspace packages.
+This tells pnpm to treat all directories under `apps/` and `packages/` as workspace packages.
 
 ### Root package.json
 
 The root `package.json` contains:
-- Workspace-level scripts for running multiple packages
+- Workspace-level scripts for running apps and packages
 - Shared devDependencies (like `@biomejs/biome`)
 - Metadata about the monorepo
 
 **Key Scripts**:
-- `pnpm dev` - Run all packages in parallel
-- `pnpm build` - Build all packages
-- `pnpm test` - Test all packages
+- `pnpm dev` - Run all apps in parallel
+- `pnpm build` - Build all apps and packages
+- `pnpm test` - Test all apps and packages
+- `pnpm api:dev` - Run API only
+- `pnpm web:dev` - Run Web only
+- `pnpm shared:build` - Build shared package
 
 ## Development Workflow
 
@@ -179,29 +191,29 @@ The root `package.json` contains:
    ```bash
    pnpm dev
    ```
-   This starts:
+   This starts both apps in parallel:
    - API on http://localhost:3000
    - Web on http://localhost:5173
-   - Shared types in watch mode
 
-3. **Or run packages individually**:
+3. **Or run apps individually**:
    ```bash
-   pnpm api:dev   # Just the API
-   pnpm web:dev   # Just the web frontend
+   pnpm api:dev      # Just the API
+   pnpm web:dev      # Just the web frontend
+   pnpm shared:dev   # Just build shared in watch mode
    ```
 
 ### Making Changes
 
 #### Backend Changes (API)
 
-1. Edit files in `packages/api/src/`
+1. Edit files in `apps/api/src/`
 2. Server auto-restarts (nodemon)
 3. Run tests: `pnpm api:test`
 4. Check types: `pnpm api:build`
 
 #### Frontend Changes (Web)
 
-1. Edit files in `packages/web/src/`
+1. Edit files in `apps/web/src/`
 2. Browser auto-reloads (Vite HMR)
 3. Check types: `pnpm web:build`
 
@@ -290,17 +302,17 @@ rm -rf node_modules
 pnpm install
 ```
 
-### Add a New Package
+### Add a New App
 
 1. Create directory:
    ```bash
-   mkdir packages/my-package
+   mkdir apps/my-app
    ```
 
 2. Create `package.json`:
    ```json
    {
-     "name": "@hello-typescript/my-package",
+     "name": "@hello-typescript/my-app",
      "version": "1.0.0",
      "private": true,
      "main": "dist/index.js"
@@ -316,17 +328,47 @@ pnpm install
 
 The workspace will automatically detect it!
 
-### Run Commands in All Packages
+### Add a New Package
+
+1. Create directory:
+   ```bash
+   mkdir packages/my-package
+   ```
+
+2. Create `package.json`:
+   ```json
+   {
+     "name": "@hello-typescript/my-package",
+     "version": "1.0.0",
+     "private": true,
+     "main": "dist/index.js",
+     "types": "dist/index.d.ts"
+   }
+   ```
+
+3. Add `tsconfig.json` and source files
+
+4. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+The workspace will automatically detect it!
+
+### Run Commands in All Apps/Packages
 
 ```bash
-# Run build in all packages
-pnpm --recursive run build
+# Run build in everything
+pnpm --recursive build
 
-# Run script only in packages that have it
-pnpm --filter './packages/*' test
+# Run script only in apps
+pnpm --filter './apps/*' dev
 
-# Run in parallel
-pnpm --parallel --filter './packages/*' dev
+# Run script only in packages
+pnpm --filter './packages/*' build
+
+# Run in parallel (useful for apps)
+pnpm --parallel --filter './apps/*' dev
 ```
 
 ### Debugging
@@ -334,10 +376,10 @@ pnpm --parallel --filter './packages/*' dev
 **API Debugging**:
 ```bash
 # Start API in debug mode
-node --inspect packages/api/dist/server.js
+node --inspect apps/api/dist/server.js
 
 # Or with ts-node
-node --inspect -r ts-node/register packages/api/src/server.ts
+node --inspect -r ts-node/register apps/api/src/server.ts
 ```
 
 **Web Debugging**:
@@ -397,11 +439,11 @@ kill -9 <PID>
 **Solution**:
 1. Clean and rebuild:
    ```bash
-   rm -rf packages/*/dist
+   rm -rf apps/*/dist packages/*/dist
    pnpm build
    ```
 
-2. Check TypeScript versions match across packages
+2. Check TypeScript versions match across apps/packages
 3. Clear TypeScript cache:
    ```bash
    find . -name "*.tsbuildinfo" -delete
@@ -414,7 +456,7 @@ kill -9 <PID>
 **Solution**:
 ```bash
 # Clear everything
-rm -rf node_modules packages/*/node_modules pnpm-lock.yaml
+rm -rf node_modules apps/*/node_modules packages/*/node_modules pnpm-lock.yaml
 
 # Reinstall
 pnpm install
@@ -422,13 +464,15 @@ pnpm install
 
 ## Best Practices
 
-1. **Always build shared package first** before building API or Web
-2. **Use workspace scripts** from root for consistency
-3. **Keep shared package minimal** - only types and pure functions
-4. **Test after changes** - run `pnpm test` frequently
-5. **Commit lock file** - `pnpm-lock.yaml` ensures reproducible installs
-6. **Use consistent versions** - same TypeScript version across packages
-7. **Document scripts** - add comments in package.json scripts
+1. **Separate apps from packages** - Apps deploy, packages are imported
+2. **Always build packages first** before building apps that depend on them
+3. **Use workspace scripts** from root for consistency
+4. **Keep shared packages minimal** - only types, utilities, and configs
+5. **Test after changes** - run `pnpm test` frequently
+6. **Commit lock file** - `pnpm-lock.yaml` ensures reproducible installs
+7. **Use consistent versions** - same TypeScript version across all workspaces
+8. **Document scripts** - add comments in package.json scripts
+9. **Scope package names** - use `@hello-typescript/` prefix for all packages
 
 ## Resources
 

@@ -12,7 +12,7 @@ importers:
         specifier: 2.3.11
         version: 2.3.11
 
-  packages/api:
+  apps/api:
     dependencies:
       '@asteasolutions/zod-to-openapi':
         specifier: ^8.4.0
@@ -64,13 +64,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/shared:
-    devDependencies:
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/web:
+  apps/web:
     dependencies:
       react:
         specifier: ^18.3.1
@@ -97,6 +91,12 @@ importers:
       vite:
         specifier: ^6.0.5
         version: 6.4.1(@types/node@25.0.10)(yaml@2.8.2)
+
+  packages/shared:
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
 

@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --filter './packages/*' dev",
-    "build": "pnpm --recursive --filter './packages/*' build",
-    "test": "pnpm --recursive --filter './packages/*' test",
-    "lint": "pnpm --recursive --filter './packages/*' lint",
-    "format": "pnpm --recursive --filter './packages/*' format",
+    "dev": "pnpm --parallel --filter './apps/*' dev",
+    "build": "pnpm --recursive build",
+    "test": "pnpm --recursive test",
+    "lint": "pnpm --recursive lint",
+    "format": "pnpm --recursive format",
     "api:dev": "pnpm --filter @hello-typescript/api dev",
     "api:build": "pnpm --filter @hello-typescript/api build",
     "api:test": "pnpm --filter @hello-typescript/api test",
+    "api:start": "pnpm --filter @hello-typescript/api start",
     "web:dev": "pnpm --filter @hello-typescript/web dev",
     "web:build": "pnpm --filter @hello-typescript/web build",
     "web:preview": "pnpm --filter @hello-typescript/web preview",
-    "shared:build": "pnpm --filter @hello-typescript/shared build"
+    "shared:build": "pnpm --filter @hello-typescript/shared build",
+    "shared:dev": "pnpm --filter @hello-typescript/shared dev"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11"

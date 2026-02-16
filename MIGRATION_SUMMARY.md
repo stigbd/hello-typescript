@@ -18,12 +18,13 @@ hello-typescript/
 └── jest.config.js
 ```
 
-### After (Monorepo)
+### After (Monorepo with Apps/Packages)
 ```
 hello-typescript/
-├── packages/
+├── apps/             # Deployable applications
 │   ├── api/          # Original backend code
-│   ├── web/          # NEW: React frontend
+│   └── web/          # NEW: React frontend
+├── packages/         # Shared, reusable packages
 │   └── shared/       # NEW: Shared types
 ├── pnpm-workspace.yaml
 └── package.json      # Root workspace config
@@ -32,19 +33,20 @@ hello-typescript/
 ## Migration Steps Performed
 
 ### 1. Created Monorepo Structure
-- ✅ Created `packages/` directory
+- ✅ Created `apps/` directory for deployable applications
+- ✅ Created `packages/` directory for shared code
 - ✅ Created `pnpm-workspace.yaml` to define workspaces
 - ✅ Updated root `package.json` with workspace scripts
 
-### 2. Migrated Backend to `packages/api/`
-- ✅ Moved `src/` → `packages/api/src/`
-- ✅ Moved `tests/` → `packages/api/tests/`
-- ✅ Moved `tsconfig.json` → `packages/api/tsconfig.json`
-- ✅ Moved `jest.config.js` → `packages/api/jest.config.js`
+### 2. Migrated Backend to `apps/api/`
+- ✅ Moved `src/` → `apps/api/src/`
+- ✅ Moved `tests/` → `apps/api/tests/`
+- ✅ Moved `tsconfig.json` → `apps/api/tsconfig.json`
+- ✅ Moved `jest.config.js` → `apps/api/jest.config.js`
 - ✅ Updated `package.json` with scoped name `@hello-typescript/api`
 - ✅ All existing tests pass ✓
 
-### 3. Created React Frontend `packages/web/`
+### 3. Created React Frontend `apps/web/`
 - ✅ Set up Vite + React + TypeScript
 - ✅ Created Animal Manager UI
 - ✅ Added API proxy to avoid CORS
@@ -104,10 +106,10 @@ hello-typescript/
 
 | Old Path | New Path |
 |----------|----------|
-| `src/` | `packages/api/src/` |
-| `tests/` | `packages/api/tests/` |
-| `dist/` | `packages/api/dist/` |
-| `tsconfig.json` | `packages/api/tsconfig.json` |
+| `src/` | `apps/api/src/` |
+| `tests/` | `apps/api/tests/` |
+| `dist/` | `apps/api/dist/` |
+| `tsconfig.json` | `apps/api/tsconfig.json` |
 
 ### Package Names
 
@@ -126,8 +128,10 @@ hello-typescript/
 ## Benefits of the New Structure
 
 ### 1. Better Code Organization
-- Clear separation of frontend, backend, and shared code
-- Each package has its own dependencies
+- **Clear separation**: Apps (deployable) vs Packages (imported)
+- Frontend and backend are separate deployable apps
+- Shared code lives in reusable packages
+- Each workspace has its own dependencies
 - Easier to navigate and understand
 
 ### 2. Improved Developer Experience
@@ -136,8 +140,9 @@ hello-typescript/
 - Type safety across the entire stack
 
 ### 3. Scalability
-- Easy to add new packages (mobile app, CLI, etc.)
-- Share code between packages
+- Easy to add new apps (mobile app, CLI, admin panel, etc.)
+- Easy to add new packages (UI components, utilities, configs)
+- Share code between apps via packages
 - Independent versioning and deployment
 
 ### 4. Modern Best Practices
@@ -175,9 +180,12 @@ pnpm api:test
 
 ### Potential Enhancements
 - [ ] Add end-to-end tests with Playwright
-- [ ] Set up CI/CD for all packages
+- [ ] Set up CI/CD for all apps and packages
 - [ ] Add Docker configuration for deployment
-- [ ] Create a CLI package for command-line management
+- [ ] Create a CLI app in `apps/cli/` for command-line management
+- [ ] Add shared UI components package in `packages/ui/`
+- [ ] Add shared ESLint config in `packages/eslint-config/`
+- [ ] Add shared TypeScript config in `packages/tsconfig/`
 - [ ] Add database integration (replace in-memory store)
 - [ ] Implement authentication
 - [ ] Add more frontend features (edit, delete animals)
@@ -191,8 +199,8 @@ If you need to revert to the single package structure:
 git checkout <commit-before-migration>
 
 # Or manually:
-cp -r packages/api/* .
-rm -rf packages/
+cp -r apps/api/* .
+rm -rf apps/ packages/
 rm pnpm-workspace.yaml
 # Restore original package.json
 ```
@@ -201,10 +209,12 @@ rm pnpm-workspace.yaml
 
 - **Lines of code added**: ~600 (frontend + configs)
 - **Files created**: 15 new files
-- **Packages created**: 3 packages (api, web, shared)
+- **Apps created**: 2 apps (api, web)
+- **Packages created**: 1 package (shared)
 - **Tests**: 17 passing (all existing tests preserved)
-- **Build time**: <5 seconds for all packages
+- **Build time**: <5 seconds for all workspaces
 - **Dependencies**: 528 total packages (shared via pnpm)
+- **Structure**: Apps/Packages separation for better organization
 
 ## Questions?
 
