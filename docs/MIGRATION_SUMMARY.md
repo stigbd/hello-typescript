@@ -175,8 +175,8 @@ pnpm api:test
 ### For Developers
 1. Run `pnpm install` to set up the workspace
 2. Run `pnpm dev` to start development
-3. Read `QUICKSTART.md` for common tasks
-4. Check `MONOREPO_SETUP.md` for architecture details
+3. Read [QUICKSTART.md](../QUICKSTART.md) for common tasks
+4. Check [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) for architecture details
 
 ### Potential Enhancements
 - [ ] Add end-to-end tests with Playwright
@@ -218,9 +218,17 @@ rm pnpm-workspace.yaml
 
 ## Questions?
 
-- See `README.md` for usage documentation
-- See `MONOREPO_SETUP.md` for architecture details
-- See `QUICKSTART.md` for getting started
+- See [README.md](../README.md) for usage documentation
+- See [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) for architecture details
+- See [QUICKSTART.md](../QUICKSTART.md) for getting started
+
+## Related Documentation
+
+- [README.md](../README.md) - Project overview and usage
+- [QUICKSTART.md](../QUICKSTART.md) - 5-minute getting started guide
+- [APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md) - Apps vs packages structure
+- [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Monorepo setup and workflow
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Detailed architecture guide
 
 ---
 

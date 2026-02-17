@@ -179,10 +179,10 @@ pnpm build
 ## Next Steps
 
 - 📖 Read [README.md](./README.md) for detailed documentation
-- 🏗️ Check [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) for monorepo architecture
-- 🔧 Explore the code in `packages/api/src` and `packages/web/src`
-- 🧪 Add more tests in `packages/api/tests`
-- 🎨 Customize the UI in `packages/web/src`
+- 🏗️ Check [docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md) for monorepo architecture
+- 🔧 Explore the code in `apps/api/src` and `apps/web/src`
+- 🧪 Add more tests in `apps/api/tests`
+- 🎨 Customize the UI in `apps/web/src`
 
 ## Need Help?
 

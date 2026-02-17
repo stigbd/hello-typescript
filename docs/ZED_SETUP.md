@@ -294,6 +294,13 @@ Then restart Zed to use the new version.
 - **Biome Documentation**: https://biomejs.dev/
 - **This Project's Docs**: [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md)
 
+## Related Documentation
+
+- [README.md](../README.md) - Project overview and usage
+- [QUICKSTART.md](../QUICKSTART.md) - 5-minute getting started guide
+- [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) - Code quality standards
+- [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Monorepo setup and workflow
+
 ## Common Questions
 
 **Q: Do I need to install any Zed extensions?**  
@@ -315,4 +322,4 @@ A: Yes! Edit `biome.jsonc` to change formatting and linting rules.
 
 **Happy coding with Zed!** ⚡
 
-If you have issues, check [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) for detailed troubleshooting.
+If you have issues, check [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) for detailed troubleshooting, or see [README.md](../README.md) for more resources.

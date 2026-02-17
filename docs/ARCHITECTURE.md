@@ -457,3 +457,9 @@ This architecture supports growth from a simple monorepo to a complex multi-app,
 - [Monorepo Tools](https://monorepo.tools/)
 - [pnpm Workspaces](https://pnpm.io/workspaces)
 - [Turborepo Handbook](https://turbo.build/repo/docs/handbook)
+
+**Related Documentation:**
+- [README.md](../README.md) - Project overview and usage
+- [APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md) - Apps vs packages structure
+- [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Monorepo setup and workflow
+- [SHARED_TYPES.md](./SHARED_TYPES.md) - Using shared types

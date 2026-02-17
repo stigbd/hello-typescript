@@ -248,7 +248,7 @@ pnpm lint
 
 **Configuration**: See `biome.jsonc` in the root directory
 
-**Full Guide**: See [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) for complete documentation
+**Full Guide**: See [docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md) for complete documentation
 
 ### Standards
 
@@ -259,27 +259,35 @@ pnpm lint
 - **Trailing commas**: Always
 - **Import organization**: Automatic
 
-## 📚 Documentation Index
+## 📚 Documentation
 
-This repository includes comprehensive documentation:
+All detailed documentation is organized in the **[docs/](./docs/)** folder for easy navigation.
+
+### Quick Access
 
 - **[README.md](./README.md)** (this file) - Project overview, quick start, and general usage
 - **[QUICKSTART.md](./QUICKSTART.md)** - 5-minute getting started guide
-- **[ZED_SETUP.md](./ZED_SETUP.md)** - Zed editor setup and configuration guide
-- **[APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md)** - Explains the apps/ vs packages/ structure and why it matters
-- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Detailed architecture guide, design principles, and scaling
-- **[MONOREPO_SETUP.md](./MONOREPO_SETUP.md)** - Comprehensive monorepo setup, workflow, and troubleshooting
-- **[MIGRATION_SUMMARY.md](./MIGRATION_SUMMARY.md)** - History of the monorepo reorganization
-- **[LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md)** - Code quality tools, Biome setup, and standards
-- **[OPENAPI_DOCS.md](./OPENAPI_DOCS.md)** - API documentation and OpenAPI specification
 
-**Start here:**
-- New to the project? → [QUICKSTART.md](./QUICKSTART.md)
-- Want to understand the structure? → [APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md)
-- Need architecture details? → [ARCHITECTURE.md](./ARCHITECTURE.md)
-- Setting up Zed editor? → [ZED_SETUP.md](./ZED_SETUP.md)
-- Code quality and linting? → [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md)
-- Having issues? → [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) (Troubleshooting section)
+### Complete Documentation ([see all in docs/](./docs/))
+
+- **[docs/APPS_VS_PACKAGES.md](./docs/APPS_VS_PACKAGES.md)** - Explains the apps/ vs packages/ structure and why it matters
+- **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** - Detailed architecture guide, design principles, and scaling
+- **[docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md)** - Comprehensive monorepo setup, workflow, and troubleshooting
+- **[docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)** - Complete guide to using shared types across the monorepo
+- **[docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md)** - Code quality tools, Biome setup, and standards
+- **[docs/ZED_SETUP.md](./docs/ZED_SETUP.md)** - Zed editor setup and configuration guide
+- **[docs/OPENAPI_DOCS.md](./docs/OPENAPI_DOCS.md)** - API documentation and OpenAPI specification
+- **[docs/MIGRATION_SUMMARY.md](./docs/MIGRATION_SUMMARY.md)** - History of the monorepo reorganization
+
+### Where to Start
+
+- 🆕 New to the project? → [QUICKSTART.md](./QUICKSTART.md)
+- 🏗️ Want to understand the structure? → [docs/APPS_VS_PACKAGES.md](./docs/APPS_VS_PACKAGES.md)
+- 📐 Need architecture details? → [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+- 💻 Setting up Zed editor? → [docs/ZED_SETUP.md](./docs/ZED_SETUP.md)
+- ✨ Code quality and linting? → [docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md)
+- 🔗 Using shared types? → [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)
+- 🔧 Having issues? → [docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md) (Troubleshooting section)
 
 ### Example API Calls
 
@@ -475,9 +483,16 @@ pnpm build
 
 ## 📚 Additional Documentation
 
-- [QUICKSTART.md](./QUICKSTART.md) - 5-minute getting started guide
-- [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Detailed architecture and workflow
-- [MIGRATION_SUMMARY.md](./MIGRATION_SUMMARY.md) - Migration history and changes
+All detailed documentation is in the [docs/](./docs/) folder:
+
+- [QUICKSTART.md](./QUICKSTART.md) - 5-minute getting started guide (at root for easy access)
+- [docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md) - Detailed architecture and workflow
+- [docs/APPS_VS_PACKAGES.md](./docs/APPS_VS_PACKAGES.md) - Understanding the monorepo structure
+- [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) - Design principles and patterns
+- [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md) - Using shared types across apps
+- [docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md) - Code quality standards
+- [docs/ZED_SETUP.md](./docs/ZED_SETUP.md) - Editor configuration
+- [docs/MIGRATION_SUMMARY.md](./docs/MIGRATION_SUMMARY.md) - Migration history
 
 ## 🏗️ Monorepo Best Practices
 

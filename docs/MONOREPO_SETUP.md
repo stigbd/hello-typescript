@@ -482,4 +482,13 @@ pnpm install
 
 ## Need Help?
 
-Check the main [README.md](./README.md) for basic usage, or open an issue if you encounter problems!
+Check the main [README.md](../README.md) for basic usage, or open an issue if you encounter problems!
+
+## Related Documentation
+
+- [README.md](../README.md) - Project overview and usage
+- [QUICKSTART.md](../QUICKSTART.md) - 5-minute getting started guide
+- [APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md) - Apps vs packages structure
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Detailed architecture guide
+- [SHARED_TYPES.md](./SHARED_TYPES.md) - Using shared types
+- [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) - Code quality standards

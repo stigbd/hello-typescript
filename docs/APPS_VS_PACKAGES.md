@@ -392,8 +392,8 @@ This reorganization sets up the project for long-term success as it grows from a
 - [pnpm Workspaces Documentation](https://pnpm.io/workspaces)
 
 **Related Documentation:**
-- [README.md](./README.md) - Project overview and usage
+- [README.md](../README.md) - Project overview and usage
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - Detailed architecture guide
 - [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Monorepo setup and workflow
-- [QUICKSTART.md](./QUICKSTART.md) - Quick start guide
+- [QUICKSTART.md](../QUICKSTART.md) - Quick start guide
 - [MIGRATION_SUMMARY.md](./MIGRATION_SUMMARY.md) - Migration history

@@ -610,3 +610,10 @@ pnpm biome --version          # Check version
 - Ask the team in your chat channel
 
 **Remember**: Consistent code formatting improves readability and reduces merge conflicts! 🎉
+
+## Related Documentation
+
+- [README.md](../README.md) - Project overview and usage
+- [QUICKSTART.md](../QUICKSTART.md) - 5-minute getting started guide
+- [ZED_SETUP.md](./ZED_SETUP.md) - Zed editor configuration
+- [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) - Monorepo setup and workflow
