@@ -9,8 +9,11 @@
     "dev": "nodemon --watch src --exec \"ts-node\" src/server.ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "format": "biome format --write ./src ./tests",
-    "lint": "biome check ./src ./tests"
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "check": "biome check --write ."
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.4.0",

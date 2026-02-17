@@ -1,16 +1,16 @@
 export interface Animal {
   name: string;
   age: number;
-  type: 'cat' | 'dog';
+  type: "cat" | "dog";
 }
 
 export interface Cat extends Animal {
-  type: 'cat';
+  type: "cat";
   livesLeft: number;
 }
 
 export interface Dog extends Animal {
-  type: 'dog';
+  type: "dog";
   breed: string;
 }
 

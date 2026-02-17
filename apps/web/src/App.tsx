@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 interface Animal {
@@ -58,13 +58,13 @@ function App() {
         ? {
             type: "cat" as const,
             name: formData.name,
-            age: parseInt(formData.age),
-            livesLeft: parseInt(formData.livesLeft),
+            age: parseInt(formData.age, 10),
+            livesLeft: parseInt(formData.livesLeft, 10),
           }
         : {
             type: "dog" as const,
             name: formData.name,
-            age: parseInt(formData.age),
+            age: parseInt(formData.age, 10),
             breed: formData.breed,
           };
 
@@ -93,9 +93,7 @@ function App() {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -197,9 +195,7 @@ function App() {
             <div className="animals-grid">
               {animals.map((animal) => (
                 <div key={animal.name} className={`animal-card ${animal.type}`}>
-                  <div className="animal-icon">
-                    {animal.type === "cat" ? "🐱" : "🐶"}
-                  </div>
+                  <div className="animal-icon">{animal.type === "cat" ? "🐱" : "🐶"}</div>
                   <h3>{animal.name}</h3>
                   <p className="animal-type">{animal.type.toUpperCase()}</p>
                   <p>Age: {animal.age} years</p>

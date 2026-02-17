@@ -1,0 +1,50 @@
+{
+  "languages": {
+    "TypeScript": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll": true
+      }
+    },
+    "TSX": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll": true
+      }
+    },
+    "JavaScript": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll": true
+      }
+    },
+    "JSON": {
+      "formatter": "language_server",
+      "format_on_save": "on"
+    }
+  },
+  "lsp": {
+    "biome": {
+      "settings": {
+        "config_path": "./biome.jsonc"
+      }
+    }
+  },
+  "formatter": "language_server",
+  "format_on_save": "on",
+  "tab_size": 2,
+  "soft_wrap": "editor_width",
+  "preferred_line_length": 100,
+  "file_types": {
+    "TypeScript": ["ts"],
+    "TSX": ["tsx"],
+    "JavaScript": ["js", "mjs", "cjs"],
+    "JSON": ["json", "jsonc"]
+  }
+}

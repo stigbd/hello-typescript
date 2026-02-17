@@ -96,7 +96,9 @@ form {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   margin-top: 0.5rem;
 }
 
@@ -127,7 +129,9 @@ form {
   padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   border: 2px solid transparent;
 }
 

@@ -16,38 +16,38 @@ const openApiSpec = generateOpenAPIDocument();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.get("/", (_req: Request, res: Response) => {
-	res.status(200).send("Hello, World!");
+  res.status(200).send("Hello, World!");
 });
 
 app.get("/animals", (_req: Request, res: Response) => {
-	res.json(animals);
+  res.json(animals);
 });
 
 app.get("/animals/:name", (req: Request, res: Response) => {
-	const name = req.params.name;
-	const animal = animals.find((a) => a.name === name);
-	if (animal) {
-		res.json(animal);
-	} else {
-		res.status(404).json({ error: "Animal not found" });
-	}
+  const name = req.params.name;
+  const animal = animals.find((a) => a.name === name);
+  if (animal) {
+    res.json(animal);
+  } else {
+    res.status(404).json({ error: "Animal not found" });
+  }
 });
 
 app.post("/animals", (req: Request, res: Response) => {
-	// Validate the entire animal object using Zod
-	const result = AnimalSchema.safeParse(req.body);
+  // Validate the entire animal object using Zod
+  const result = AnimalSchema.safeParse(req.body);
 
-	if (!result.success) {
-		// Return detailed validation errors
-		return res.status(400).json({
-			error: "Invalid animal data",
-			details: result.error.format(),
-		});
-	}
+  if (!result.success) {
+    // Return detailed validation errors
+    return res.status(400).json({
+      error: "Invalid animal data",
+      details: result.error.format(),
+    });
+  }
 
-	const newAnimal: Animal = result.data;
-	animals.push(newAnimal);
-	res.status(201).location(`/animals/${newAnimal.name}`).send();
+  const newAnimal: Animal = result.data;
+  animals.push(newAnimal);
+  res.status(201).location(`/animals/${newAnimal.name}`).send();
 });
 
 export default app;

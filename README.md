@@ -174,6 +174,7 @@ pnpm shared:dev    # Watch mode
 | `pnpm dev` | Run all apps in development mode (parallel) |
 | `pnpm build` | Build all packages and apps |
 | `pnpm test` | Run tests in all packages |
+| `pnpm check` | Lint, format, and organize imports |
 | `pnpm lint` | Lint all code |
 | `pnpm format` | Format all code |
 
@@ -204,8 +205,8 @@ pnpm shared:dev    # Watch mode
 - **Frontend:** React 18 + Vite
 - **API Docs:** OpenAPI/Swagger
 - **Validation:** Zod
-- **Testing:** Jest + Supertest
-- **Code Quality:** Biome (linting + formatting)
+- **Testing**: Jest + Supertest
+- **Code Quality**: Biome (linting + formatting + import sorting)
 
 ## 📖 API Documentation
 
@@ -215,22 +216,69 @@ When running the API, OpenAPI documentation is available at:
 http://localhost:3000/api-docs
 ```
 
+## 🎨 Code Quality: Linting and Formatting
+
+This project uses **Biome** for fast, unified linting and formatting.
+
+### Quick Commands
+
+```sh
+# Check and fix all code
+pnpm check
+
+# Format all files
+pnpm format
+
+# Lint all files
+pnpm lint
+```
+
+### Editor Integration
+
+**Zed (Recommended):**
+- Built-in Biome support - no extension needed!
+- Settings are pre-configured in `.zed/settings.json`
+- Code auto-formats on save ✨
+- Just open the project and it works!
+
+**VS Code:**
+1. Install the "Biome" extension
+2. Create `.vscode/settings.json` with formatter settings
+3. Code auto-formats on save ✨
+
+**Configuration**: See `biome.jsonc` in the root directory
+
+**Full Guide**: See [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md) for complete documentation
+
+### Standards
+
+- **Indentation**: 2 spaces
+- **Line width**: 100 characters
+- **Quotes**: Double quotes
+- **Semicolons**: Always
+- **Trailing commas**: Always
+- **Import organization**: Automatic
+
 ## 📚 Documentation Index
 
 This repository includes comprehensive documentation:
 
 - **[README.md](./README.md)** (this file) - Project overview, quick start, and general usage
 - **[QUICKSTART.md](./QUICKSTART.md)** - 5-minute getting started guide
+- **[ZED_SETUP.md](./ZED_SETUP.md)** - Zed editor setup and configuration guide
 - **[APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md)** - Explains the apps/ vs packages/ structure and why it matters
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Detailed architecture guide, design principles, and scaling
 - **[MONOREPO_SETUP.md](./MONOREPO_SETUP.md)** - Comprehensive monorepo setup, workflow, and troubleshooting
 - **[MIGRATION_SUMMARY.md](./MIGRATION_SUMMARY.md)** - History of the monorepo reorganization
+- **[LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md)** - Code quality tools, Biome setup, and standards
 - **[OPENAPI_DOCS.md](./OPENAPI_DOCS.md)** - API documentation and OpenAPI specification
 
 **Start here:**
 - New to the project? → [QUICKSTART.md](./QUICKSTART.md)
 - Want to understand the structure? → [APPS_VS_PACKAGES.md](./APPS_VS_PACKAGES.md)
 - Need architecture details? → [ARCHITECTURE.md](./ARCHITECTURE.md)
+- Setting up Zed editor? → [ZED_SETUP.md](./ZED_SETUP.md)
+- Code quality and linting? → [LINTING_AND_FORMATTING.md](./LINTING_AND_FORMATTING.md)
 - Having issues? → [MONOREPO_SETUP.md](./MONOREPO_SETUP.md) (Troubleshooting section)
 
 ### Example API Calls
