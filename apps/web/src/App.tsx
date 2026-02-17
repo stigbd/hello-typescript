@@ -1,23 +1,7 @@
+// Import shared types from the monorepo package
+import type { AnimalType, Cat, Dog } from "@hello-typescript/shared";
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
-
-interface Animal {
-  name: string;
-  age: number;
-  type: "cat" | "dog";
-}
-
-interface Cat extends Animal {
-  type: "cat";
-  livesLeft: number;
-}
-
-interface Dog extends Animal {
-  type: "dog";
-  breed: string;
-}
-
-type AnimalType = Cat | Dog;
 
 function App() {
   const [animals, setAnimals] = useState<AnimalType[]>([]);
@@ -53,7 +37,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const animal =
+    const animal: Cat | Dog =
       formData.type === "cat"
         ? {
             type: "cat" as const,
