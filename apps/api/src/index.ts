@@ -1,5 +1,6 @@
 import express, { type Request, type Response } from "express";
 import swaggerUi from "swagger-ui-express";
+import { z } from "zod";
 import { type Animal, AnimalSchema } from "./models/animal";
 import { generateOpenAPIDocument } from "./openapi";
 import { animals } from "./store/animals";
@@ -38,10 +39,10 @@ app.post("/animals", (req: Request, res: Response) => {
   const result = AnimalSchema.safeParse(req.body);
 
   if (!result.success) {
-    // Return detailed validation errors
+    // Return detailed validation errors using z.treeifyError
     return res.status(400).json({
       error: "Invalid animal data",
-      details: result.error.format(),
+      details: z.treeifyError(result.error),
     });
   }
 
