@@ -13,8 +13,8 @@ app.use(express.json());
 // Generate OpenAPI spec from Zod schemas
 const openApiSpec = generateOpenAPIDocument();
 
-// Serve OpenAPI docs at /api-docs
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
+// Serve OpenAPI docs at /docs
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).send("Hello, World!");

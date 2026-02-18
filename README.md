@@ -55,7 +55,7 @@ pnpm dev
 This starts:
 - 🚀 API Server: http://localhost:3000
 - 🎨 Web Frontend: http://localhost:5173
-- 📚 API Docs: http://localhost:3000/api-docs
+- 📚 API Docs: http://localhost:3000/docs
 
 Or run them individually:
 
@@ -213,7 +213,7 @@ pnpm types:dev    # Watch mode
 When running the API, OpenAPI documentation is available at:
 
 ```
-http://localhost:3000/api-docs
+http://localhost:3000/docs
 ```
 
 ## 🎨 Code Quality: Linting and Formatting

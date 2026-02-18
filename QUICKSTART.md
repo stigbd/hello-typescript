@@ -35,7 +35,7 @@ pnpm dev
 This will start:
 - 🚀 API Server: http://localhost:3000
 - 🎨 Web Frontend: http://localhost:5173
-- 📚 API Docs: http://localhost:3000/api-docs
+- 📚 API Docs: http://localhost:3000/docs
 
 ### Option 2: Run Separately
 
@@ -62,7 +62,7 @@ pnpm web:dev
 
 3. **View animals**: All animals appear in the grid below the form
 
-4. **API Documentation**: Visit http://localhost:3000/api-docs to see the Swagger UI
+4. **API Documentation**: Visit http://localhost:3000/docs to see the Swagger UI
 
 ## Testing
 

@@ -112,7 +112,7 @@ import swaggerUi from "swagger-ui-express";
 import { generateOpenAPIDocument } from "./openapi";
 
 const openApiSpec = generateOpenAPIDocument();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 ```
 
 ## 🚀 Usage
@@ -123,7 +123,7 @@ pnpm dev
 ```
 
 ### View API Documentation
-Open your browser to: **http://localhost:3000/api-docs**
+Open your browser to: **http://localhost:3000/docs**
 
 You'll see a fully interactive Swagger UI with:
 - ✅ All endpoints documented
