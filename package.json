@@ -18,8 +18,8 @@
     "web:dev": "pnpm --filter @hello-typescript/web dev",
     "web:build": "pnpm --filter @hello-typescript/web build",
     "web:preview": "pnpm --filter @hello-typescript/web preview",
-    "shared:build": "pnpm --filter @hello-typescript/shared build",
-    "shared:dev": "pnpm --filter @hello-typescript/shared dev"
+    "types:build": "pnpm --filter @hello-typescript/types build",
+    "types:dev": "pnpm --filter @hello-typescript/types dev"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11"

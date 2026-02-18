@@ -96,7 +96,7 @@ hello-typescript/
 │   ├── api/       # Express REST API
 │   └── web/       # React frontend
 ├── packages/      # Shared, reusable packages
-│   └── shared/    # Shared TypeScript types
+│   └── types/     # TypeScript type definitions
 └── package.json   # Root workspace config
 ```
 

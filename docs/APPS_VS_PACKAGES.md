@@ -21,8 +21,8 @@ hello-typescript/
 ├── apps/
 │   ├── api/
 │   └── web/
-└── packages/
-    └── shared/
+├── packages/
+    └── types/
 ```
 
 ## Why Apps vs Packages?
@@ -56,7 +56,7 @@ Think of it like a restaurant:
   - `apps/web/` = Dining room (customer experience)
 
 - **Packages** = Shared recipes and ingredients (reusable resources)
-  - `packages/shared/` = Recipe book (types/interfaces)
+  - `packages/types/` = Recipe book (types/interfaces)
   - `packages/ui/` = Standard plating techniques (UI components)
   - `packages/utils/` = Kitchen tools (helper functions)
 
@@ -79,7 +79,7 @@ apps/
 └── worker/           # Background jobs (future)
 
 packages/
-├── shared/           # Common types
+├── types/            # Existing types
 ├── ui/               # UI components (future)
 ├── database/         # Database client (future)
 └── utils/            # Helper functions (future)
@@ -96,10 +96,10 @@ This pattern is used by major projects:
 Apps depend on packages, never the reverse:
 
 ```
-apps/api  ──→  packages/shared
-apps/web  ──→  packages/shared
+apps/api  ──→  packages/types
+apps/web  ──→  packages/types
 
-packages/shared  ✗  apps/api  (NEVER!)
+packages/types  ✗  apps/api  (NEVER!)
 ```
 
 ### 5. **Independent Deployment**
@@ -129,7 +129,7 @@ This tells pnpm to look in both directories for workspaces.
     "test": "pnpm --recursive test",
     "api:dev": "pnpm --filter @hello-typescript/api dev",
     "web:dev": "pnpm --filter @hello-typescript/web dev",
-    "shared:build": "pnpm --filter @hello-typescript/shared build"
+    "types:build": "pnpm --filter @hello-typescript/types build"
   }
 }
 ```
@@ -180,7 +180,7 @@ pnpm build
 # Build specific workspace
 pnpm api:build
 pnpm web:build
-pnpm shared:build
+pnpm types:build
 ```
 
 ### Adding New Workspaces
@@ -220,21 +220,21 @@ pnpm --filter @hello-typescript/api test
 
 ```typescript
 // apps/api/src/index.ts
-import { Animal, Cat, Dog } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 
 // apps/web/src/App.tsx
-import { Animal } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 ```
 
 ### Packages Never Import Apps
 
 ```typescript
 // ❌ WRONG - Package importing app
-// packages/shared/src/types.ts
+// packages/types/src/types.ts
 import { something } from '@hello-typescript/api';  // DON'T DO THIS!
 
 // ✅ CORRECT - Package is self-contained
-// packages/shared/src/types.ts
+// packages/types/src/types.ts
 export interface Animal {
   name: string;
   age: number;
@@ -245,7 +245,7 @@ export interface Animal {
 
 ```typescript
 // apps/web/src/App.tsx
-import { Animal } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 import { Button } from '@hello-typescript/ui';        // future
 import { formatDate } from '@hello-typescript/utils'; // future
 ```
@@ -254,7 +254,7 @@ import { formatDate } from '@hello-typescript/utils'; // future
 
 ```typescript
 // packages/ui/src/AnimalCard.tsx
-import { Animal } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 import { formatName } from '@hello-typescript/utils';
 
 export function AnimalCard({ animal }: { animal: Animal }) {
@@ -296,7 +296,7 @@ export function AnimalCard({ animal }: { animal: Animal }) {
    - Split into focused, modular packages
 
 5. **Don't duplicate code across apps**
-   - Extract to a shared package instead
+   - Extract to a reusable package instead
 
 ## Future Growth Examples
 
@@ -317,14 +317,14 @@ apps/
 
 ```
 packages/
-├── shared/           # Current: Common types
+├── types/            # Current: Common types
 ├── ui/               # Future: Shared React components
 ├── utils/            # Future: Helper functions
 ├── database/         # Future: Database client & models
 ├── auth/             # Future: Authentication utilities
 ├── api-client/       # Future: Type-safe API client
-├── tsconfig/         # Future: Shared TypeScript configs
-├── eslint-config/    # Future: Shared linting rules
+├── config/           # Future: Shared configurations
+├── validation/       # Future: Shared validation schemas
 └── test-utils/       # Future: Testing utilities
 ```
 
@@ -342,7 +342,7 @@ packages/
 packages/
 ├── api/
 ├── web/
-└── shared/
+└── types/
 
 ✓ Better than single package
 ✗ Unclear which are apps vs libraries
@@ -356,7 +356,7 @@ apps/
 └── web/
 
 packages/
-└── shared/
+└── types/
 
 ✓ Clear separation of concerns
 ✓ Semantic meaning (deploy vs import)

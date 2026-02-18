@@ -45,13 +45,13 @@ This project follows a **two-tier architecture** that separates deployable appli
 - Should have minimal external dependencies
 
 **Examples in this project**:
-- `packages/shared/` - Common TypeScript types and interfaces
+- `packages/types/` - Common TypeScript type definitions
 
 **Future packages could include**:
 - `packages/ui/` - Shared React components
 - `packages/utils/` - Helper functions and utilities
-- `packages/tsconfig/` - Shared TypeScript configurations
-- `packages/eslint-config/` - Shared linting rules
+- `packages/validation/` - Shared validation schemas
+- `packages/config/` - Shared configurations
 
 **Naming Convention**: `@hello-typescript/<package-name>`
 
@@ -85,7 +85,7 @@ hello-typescript/
 │       └── index.html             # HTML template
 │
 ├── packages/                       # Shared Libraries
-│   └── shared/                     # Shared Types
+│   └── types/                      # TypeScript Types
 │       ├── src/
 │       │   ├── types.ts           # Type definitions
 │       │   └── index.ts           # Exports
@@ -112,7 +112,7 @@ apps/web/     → Handles UI, user interactions, state management
 **Packages are focused**: Each package has a single, well-defined purpose.
 
 ```
-packages/shared/   → Only types, no runtime logic
+packages/types/   → Only types, no runtime logic
 ```
 
 ### 2. Dependency Direction
@@ -120,10 +120,10 @@ packages/shared/   → Only types, no runtime logic
 Dependencies flow in one direction: **Apps depend on Packages, never the reverse.**
 
 ```
-apps/api  ──→  packages/shared
-apps/web  ──→  packages/shared
+apps/api  ──→  packages/types
+apps/web  ──→  packages/types
 
-packages/shared  ✗  apps/api    (NEVER!)
+packages/types  ✗  apps/api    (NEVER!)
 ```
 
 This prevents circular dependencies and keeps the architecture clean.
@@ -135,7 +135,7 @@ We use pnpm workspace protocol to reference internal packages:
 ```json
 {
   "dependencies": {
-    "@hello-typescript/shared": "workspace:*"
+    "@hello-typescript/types": "workspace:*"
   }
 }
 ```
@@ -147,10 +147,10 @@ Benefits:
 
 ### 4. Type Safety Across Boundaries
 
-The `shared` package ensures type consistency between frontend and backend:
+The `types` package ensures type consistency between frontend and backend:
 
 ```typescript
-// packages/shared/src/types.ts
+// packages/types/src/types.ts
 export interface Animal {
   name: string;
   age: number;
@@ -158,10 +158,10 @@ export interface Animal {
 }
 
 // apps/api/src/index.ts
-import { Animal } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 
 // apps/web/src/App.tsx
-import { Animal } from '@hello-typescript/shared';
+import { Animal } from '@hello-typescript/types';
 ```
 
 Both apps use the exact same types, preventing API contract mismatches.
@@ -179,7 +179,7 @@ Both apps use the exact same types, preventing API contract mismatches.
        ↓
 ┌─────────────┐
 │  packages/  │
-│   shared    │
+│    types    │
 └──────┬──────┘
        ↑
        │ imports
@@ -194,14 +194,14 @@ Both apps use the exact same types, preventing API contract mismatches.
 **apps/api**:
 - Production: `express`, `zod`, `swagger-ui-express`, `@asteasolutions/zod-to-openapi`
 - Development: `typescript`, `ts-node`, `nodemon`, `jest`, `@types/*`
-- Internal: `@hello-typescript/shared` (future)
+- Internal: `@hello-typescript/types` (future)
 
 **apps/web**:
 - Production: `react`, `react-dom`
 - Development: `typescript`, `vite`, `@vitejs/plugin-react`, `@types/*`
-- Internal: `@hello-typescript/shared` (future)
+- Internal: `@hello-typescript/types` (future)
 
-**packages/shared**:
+**packages/types**:
 - Production: None (types only)
 - Development: `typescript`
 - Internal: None
@@ -223,7 +223,7 @@ pnpm build
 ```
 
 Build order:
-1. `packages/shared` - Types must be built first
+1. `packages/types` - Types must be built first
 2. `apps/api` - Can now import built types
 3. `apps/web` - Can now import built types
 
@@ -325,14 +325,14 @@ Extract common code into focused packages:
 
 ```
 packages/
-├── shared/           # Existing types
+├── types/            # Existing types
 ├── ui/               # NEW: Shared React components
 ├── utils/            # NEW: Helper functions
 ├── database/         # NEW: Database client & models
 ├── auth/             # NEW: Authentication logic
 ├── api-client/       # NEW: Type-safe API client
-├── tsconfig/         # NEW: Shared TS configs
-└── eslint-config/    # NEW: Shared linting rules
+├── config/           # NEW: Shared configurations
+└── validation/       # NEW: Shared validation schemas
 ```
 
 Benefits:
@@ -411,7 +411,7 @@ apps/
 └── notification-service/  # Notifications
 ```
 
-All services can share packages like `shared`, `database`, `utils`.
+All services can share packages like `types`, `database`, `utils`.
 
 ### Microfrontends
 

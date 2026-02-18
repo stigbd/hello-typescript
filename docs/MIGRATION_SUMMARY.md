@@ -25,7 +25,7 @@ hello-typescript/
 │   ├── api/          # Original backend code
 │   └── web/          # NEW: React frontend
 ├── packages/         # Shared, reusable packages
-│   └── shared/       # NEW: Shared types
+│   └── types/        # NEW: Type definitions
 ├── pnpm-workspace.yaml
 └── package.json      # Root workspace config
 ```
@@ -54,8 +54,8 @@ hello-typescript/
 - ✅ Form validation
 - ✅ Real-time updates
 
-### 4. Created Shared Package `packages/shared/`
-- ✅ Extracted TypeScript interfaces
+### 4. Created Types Package `packages/types/`
+- ✅ Extracted TypeScript type definitions
 - ✅ Set up for sharing between API and Web
 - ✅ Configured TypeScript declarations
 
@@ -87,8 +87,8 @@ hello-typescript/
 - No CORS configuration needed
 - Seamless development experience
 
-### Shared Types Package
-- Common TypeScript types
+### Types Package
+- TypeScript type definitions
 - Used by both frontend and backend
 - Single source of truth for data models
 
@@ -130,7 +130,7 @@ hello-typescript/
 ### 1. Better Code Organization
 - **Clear separation**: Apps (deployable) vs Packages (imported)
 - Frontend and backend are separate deployable apps
-- Shared code lives in reusable packages
+- Shared type definitions live in reusable packages
 - Each workspace has its own dependencies
 - Easier to navigate and understand
 
@@ -183,9 +183,9 @@ pnpm api:test
 - [ ] Set up CI/CD for all apps and packages
 - [ ] Add Docker configuration for deployment
 - [ ] Create a CLI app in `apps/cli/` for command-line management
-- [ ] Add shared UI components package in `packages/ui/`
-- [ ] Add shared ESLint config in `packages/eslint-config/`
-- [ ] Add shared TypeScript config in `packages/tsconfig/`
+- [ ] Add UI components package in `packages/ui/`
+- [ ] Add validation schemas package in `packages/validation/`
+- [ ] Add shared configuration package in `packages/config/`
 - [ ] Add database integration (replace in-memory store)
 - [ ] Implement authentication
 - [ ] Add more frontend features (edit, delete animals)
@@ -210,10 +210,10 @@ rm pnpm-workspace.yaml
 - **Lines of code added**: ~600 (frontend + configs)
 - **Files created**: 15 new files
 - **Apps created**: 2 apps (api, web)
-- **Packages created**: 1 package (shared)
+- **Packages created**: 1 package (types)
 - **Tests**: 17 passing (all existing tests preserved)
 - **Build time**: <5 seconds for all workspaces
-- **Dependencies**: 528 total packages (shared via pnpm)
+- **Dependencies**: 528 total packages (managed via pnpm)
 - **Structure**: Apps/Packages separation for better organization
 
 ## Questions?

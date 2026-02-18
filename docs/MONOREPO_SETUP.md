@@ -17,7 +17,7 @@ This document explains the monorepo structure and how to work with it effectivel
 This project uses **pnpm workspaces** to manage a TypeScript monorepo with a clear separation:
 
 - **Apps**: Deployable applications (API server, Web frontend)
-- **Packages**: Shared, reusable libraries (types, utilities, configs)
+- **Packages**: Reusable libraries (type definitions, utilities, configs)
 
 ### Why Monorepo with Apps/Packages Structure?
 
@@ -61,7 +61,7 @@ hello-typescript/
 │       └── vite.config.ts
 │
 ├── packages/                        # Shared, reusable packages
-│   └── shared/                      # Shared TypeScript types
+│   └── types/                       # TypeScript type definitions
 │       ├── src/
 │       │   ├── types.ts             # Common TypeScript types
 │       │   └── index.ts             # Barrel export
@@ -128,12 +128,12 @@ pnpm web:build    # Production build
 pnpm web:preview  # Preview production build
 ```
 
-### @hello-typescript/shared
+### @hello-typescript/types
 
-**Purpose**: Shared TypeScript types and utilities
+**Purpose**: TypeScript type definitions
 
 **Key Features**:
-- Common type definitions
+- Type definitions for domain models
 - No runtime dependencies
 - Built with TypeScript declarations
 
@@ -143,12 +143,12 @@ pnpm web:preview  # Preview production build
 - `Dog` - Dog interface with breed
 - `AnimalType` - Union type of Cat | Dog
 
-**Location**: `packages/shared/`
+**Location**: `packages/types/`
 
 **Scripts**:
 ```bash
-pnpm shared:build  # Build TypeScript declarations
-pnpm shared:dev    # Watch mode
+pnpm types:build  # Build TypeScript declarations
+pnpm types:dev    # Watch mode
 ```
 
 ## Workspace Configuration
@@ -176,7 +176,7 @@ The root `package.json` contains:
 - `pnpm test` - Test all apps and packages
 - `pnpm api:dev` - Run API only
 - `pnpm web:dev` - Run Web only
-- `pnpm shared:build` - Build shared package
+- `pnpm types:build` - Build types package
 
 ## Development Workflow
 
@@ -233,8 +233,8 @@ pnpm --filter @hello-typescript/api add express
 # Add dev dependency to Web
 pnpm --filter @hello-typescript/web add -D eslint
 
-# Add to shared
-pnpm --filter @hello-typescript/shared add lodash
+# Add to types
+pnpm --filter @hello-typescript/types add lodash
 ```
 
 **To the root (for tooling)**:
@@ -252,19 +252,19 @@ To use the shared package in API or Web:
    ```json
    {
      "dependencies": {
-       "@hello-typescript/shared": "workspace:*"
+       "@hello-typescript/types": "workspace:*"
      }
    }
    ```
 
 2. Import in code:
    ```typescript
-   import { Animal, Cat, Dog } from '@hello-typescript/shared'
+   import { Animal, Cat, Dog } from '@hello-typescript/types'
    ```
 
-3. Build the shared package first:
+3. Build the types package first:
    ```bash
-   pnpm shared:build
+   pnpm types:build
    ```
 
 ## Common Tasks
@@ -389,19 +389,19 @@ Use browser DevTools. Source maps are enabled by default in Vite.
 
 ### "Package not found in workspace"
 
-**Problem**: `@hello-typescript/shared` not found
+**Problem**: `@hello-typescript/types` not found
 
 **Solution**:
 1. Make sure the package name in `package.json` matches
 2. Run `pnpm install` to update workspace links
-3. Build the shared package: `pnpm shared:build`
+3. Build the types package: `pnpm types:build`
 
 ### "Module not found" in TypeScript
 
 **Problem**: TypeScript can't find shared types
 
 **Solution**:
-1. Build shared package first: `pnpm shared:build`
+1. Build types package first: `pnpm types:build`
 2. Check `tsconfig.json` has correct paths
 3. Restart TypeScript server in your editor
 
@@ -467,7 +467,7 @@ pnpm install
 1. **Separate apps from packages** - Apps deploy, packages are imported
 2. **Always build packages first** before building apps that depend on them
 3. **Use workspace scripts** from root for consistency
-4. **Keep shared packages minimal** - only types, utilities, and configs
+4. **Keep packages minimal and focused** - types, utilities, configs in separate packages
 5. **Test after changes** - run `pnpm test` frequently
 6. **Commit lock file** - `pnpm-lock.yaml` ensures reproducible installs
 7. **Use consistent versions** - same TypeScript version across all workspaces

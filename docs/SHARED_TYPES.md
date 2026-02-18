@@ -1,13 +1,13 @@
-# Shared Types Guide
+# Types Package Guide
 
-This guide explains how to use shared types from `packages/shared` across your monorepo apps.
+This guide explains how to use types from `packages/types` across your monorepo apps.
 
 ## Quick Start (5 Minutes)
 
 ### 1. Import Types
 
 ```typescript
-import type { AnimalType, Cat, Dog } from "@hello-typescript/shared";
+import type { AnimalType, Cat, Dog } from "@hello-typescript/types";
 ```
 
 ### 2. Use Them
@@ -24,7 +24,7 @@ const cat: Cat = {
 ### 3. Build First (If Needed)
 
 ```bash
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 ```
 
 That's it! Now read on for details.
@@ -44,7 +44,7 @@ That's it! Now read on for details.
 
 ## Overview
 
-The `@hello-typescript/shared` package contains TypeScript types used across multiple apps in the monorepo. This ensures:
+The `@hello-typescript/types` package contains TypeScript type definitions used across multiple apps in the monorepo. This ensures:
 
 ✅ **Type consistency** - API and web app always agree on data shapes  
 ✅ **Single source of truth** - Define types once, use everywhere  
@@ -54,7 +54,7 @@ The `@hello-typescript/shared` package contains TypeScript types used across mul
 ### Package Structure
 
 ```
-packages/shared/
+packages/types/
 ├── src/
 │   ├── index.ts      # Exports all types
 │   └── types.ts      # Type definitions
@@ -65,7 +65,7 @@ packages/shared/
 
 ## Available Types
 
-All types are defined in `packages/shared/src/types.ts`:
+All types are defined in `packages/types/src/types.ts`:
 
 ### Animal (Base Interface)
 
@@ -119,11 +119,11 @@ function describeAnimal(animal: AnimalType) {
 
 ### Build Process
 
-The shared package must be built before use:
+The types package must be built before use:
 
 ```bash
-# Build shared package only
-pnpm --filter @hello-typescript/shared build
+# Build types package only
+pnpm --filter @hello-typescript/types build
 
 # Or build everything (automatically builds in correct order)
 pnpm build
@@ -137,7 +137,7 @@ pnpm build
 ### Dependency Flow
 
 ```
-packages/shared/src/types.ts
+packages/types/src/types.ts
   └─> Compiled to dist/types.d.ts
       ├─> Imported by apps/web/src/App.tsx
       └─> Imported by apps/api/src/models/animal.ts
@@ -145,12 +145,12 @@ packages/shared/src/types.ts
 
 ### Workspace Dependencies
 
-Both apps reference the shared package in their `package.json`:
+Both apps reference the types package in their `package.json`:
 
 ```json
 {
   "dependencies": {
-    "@hello-typescript/shared": "workspace:*"
+    "@hello-typescript/types": "workspace:*"
   }
 }
 ```
@@ -162,7 +162,7 @@ The `workspace:*` protocol tells pnpm to use the local package.
 ### In React (apps/web)
 
 ```typescript
-import type { AnimalType, Cat, Dog } from "@hello-typescript/shared";
+import type { AnimalType, Cat, Dog } from "@hello-typescript/types";
 import { useState } from "react";
 
 function App() {
@@ -193,7 +193,7 @@ function App() {
 ### In Express API (apps/api)
 
 ```typescript
-import type { AnimalType, Cat, Dog } from "@hello-typescript/shared";
+import type { AnimalType, Cat, Dog } from "@hello-typescript/types";
 import { Request, Response } from "express";
 
 // Type-safe storage
@@ -213,11 +213,11 @@ function addAnimal(req: Request, res: Response) {
 
 ### Integration with Runtime Validation
 
-In the API, we combine shared types with Zod for runtime validation:
+In the API, we combine type definitions with Zod for runtime validation:
 
 ```typescript
 // apps/api/src/models/animal.ts
-import type { Cat as SharedCat } from "@hello-typescript/shared";
+import type { Cat as TypesCat } from "@hello-typescript/types";
 import { z } from "zod";
 
 // Zod schema for runtime validation
@@ -228,33 +228,33 @@ export const CatSchema = z.object({
   livesLeft: z.number().int().min(0).max(9),
 });
 
-// Inferred type from Zod (compatible with SharedCat)
+// Inferred type from Zod (compatible with TypesCat)
 export type Cat = z.infer<typeof CatSchema>;
 
-// Re-export shared type for reference
-export type { SharedCat };
+// Re-export types package type for reference
+export type { TypesCat };
 ```
 
 **Benefits:**
 - Runtime validation with Zod
-- Compile-time type checking with shared types
+- Compile-time type checking with type definitions
 - Type consistency across frontend and backend
 
 ## Development Workflow
 
 ### Option 1: Build Once
 
-Build the shared package before starting development:
+Build the types package before starting development:
 
 ```bash
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 pnpm dev
 ```
 
 Rebuild when you change types:
 
 ```bash
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 ```
 
 ### Option 2: Watch Mode (Recommended)
@@ -263,7 +263,7 @@ Run the shared package in watch mode for auto-rebuild:
 
 ```bash
 # Terminal 1: Watch shared types (auto-rebuild on changes)
-pnpm --filter @hello-typescript/shared dev
+pnpm --filter @hello-typescript/types dev
 
 # Terminal 2: Run API
 pnpm --filter @hello-typescript/api dev
@@ -286,7 +286,7 @@ pnpm check    # Lint and format
 
 ### Step 1: Define the Type
 
-Edit `packages/shared/src/types.ts`:
+1. Edit `packages/types/src/types.ts`
 
 ```typescript
 export interface User {
@@ -300,13 +300,13 @@ export interface User {
 ### Step 2: Rebuild
 
 ```bash
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 ```
 
 ### Step 3: Import and Use
 
 ```typescript
-import type { User } from "@hello-typescript/shared";
+import type { Owner } from "@hello-typescript/types";
 
 const user: User = {
   id: "123",
@@ -397,7 +397,7 @@ function updateCat(name: string, updates: UpdateCat) {
 ### React Props
 
 ```typescript
-import type { AnimalType } from "@hello-typescript/shared";
+import type { AnimalType } from "@hello-typescript/types";
 
 interface AnimalCardProps {
   animal: AnimalType;
@@ -441,8 +441,8 @@ async function fetchAnimals(): Promise<AnimalsResponse> {
 
 **Fix:**
 ```bash
-# Build the shared package
-pnpm --filter @hello-typescript/shared build
+4. Build the types package:
+pnpm --filter @hello-typescript/types build
 
 # Or reinstall dependencies
 pnpm install
@@ -454,7 +454,7 @@ pnpm install
 
 **Fix:**
 ```bash
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 
 # Or rebuild everything
 pnpm build
@@ -497,10 +497,10 @@ pnpm build
 
 ```bash
 # Build shared package
-pnpm --filter @hello-typescript/shared build
+pnpm --filter @hello-typescript/types build
 
 # Watch mode (auto-rebuild)
-pnpm --filter @hello-typescript/shared dev
+pnpm --filter @hello-typescript/types dev
 
 # Build everything
 pnpm build

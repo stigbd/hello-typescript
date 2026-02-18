@@ -1,5 +1,5 @@
-// Import shared types from the monorepo package
-import type { AnimalType, Cat, Dog } from "@hello-typescript/shared";
+// Import types from the monorepo package
+import type { AnimalType, Cat, Dog } from "@hello-typescript/types";
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 

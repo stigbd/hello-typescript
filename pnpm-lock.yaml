@@ -17,6 +17,9 @@ importers:
       '@asteasolutions/zod-to-openapi':
         specifier: ^8.4.0
         version: 8.4.0(zod@4.3.6)
+      '@hello-typescript/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       express:
         specifier: ^5.2.1
         version: 5.2.1
@@ -66,9 +69,9 @@ importers:
 
   apps/web:
     dependencies:
-      '@hello-typescript/shared':
+      '@hello-typescript/types':
         specifier: workspace:*
-        version: link:../../packages/shared
+        version: link:../../packages/types
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -95,7 +98,7 @@ importers:
         specifier: ^6.0.5
         version: 6.4.1(@types/node@25.0.10)(yaml@2.8.2)
 
-  packages/shared:
+  packages/types:
     devDependencies:
       typescript:
         specifier: ^5.9.3

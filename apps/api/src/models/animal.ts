@@ -4,7 +4,7 @@ import type {
   Animal as SharedAnimal,
   Cat as SharedCat,
   Dog as SharedDog,
-} from "@hello-typescript/shared";
+} from "@hello-typescript/types";
 import { z } from "zod";
 
 // Extend Zod with OpenAPI capabilities
@@ -102,7 +102,7 @@ export const NotFoundResponseSchema = z
  * TypeScript types inferred from Zod schemas
  * These are automatically kept in sync with the schemas
  *
- * Note: The inferred types are compatible with the shared types from @hello-typescript/shared
+ * Note: The inferred types are compatible with the types from @hello-typescript/types
  * This ensures type consistency across the API and web app.
  */
 export type Cat = z.infer<typeof CatSchema>;
@@ -119,9 +119,9 @@ export type { SharedAnimal, SharedCat, SharedDog };
 /**
  * Type Compatibility Notes:
  *
- * The Zod-inferred types (Cat, Dog, Animal) are compatible with the shared types
- * from @hello-typescript/shared. The Zod schemas provide runtime validation while
- * the shared types provide compile-time type checking across the monorepo.
+ * The Zod-inferred types (Cat, Dog, Animal) are compatible with the types
+ * from @hello-typescript/types. The Zod schemas provide runtime validation while
+ * the types package provides compile-time type checking across the monorepo.
  *
  * The types are structurally identical, ensuring that:
  * - Data validated by Zod can be safely used where SharedAnimal types are expected

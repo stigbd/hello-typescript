@@ -12,7 +12,7 @@ hello-typescript/
 │   ├── api/                # Express + TypeScript REST API
 │   └── web/                # React + TypeScript frontend
 ├── packages/                # Shared, reusable packages
-│   └── shared/             # Shared TypeScript types
+│   └── types/              # TypeScript type definitions
 ├── pnpm-workspace.yaml
 └── package.json
 ```
@@ -80,7 +80,7 @@ Or build individually:
 ```sh
 pnpm api:build
 pnpm web:build
-pnpm shared:build
+pnpm types:build
 ```
 
 ### Testing
@@ -147,11 +147,11 @@ pnpm web:preview  # Preview production build
 
 ## 📦 Packages
 
-### @hello-typescript/shared
+### @hello-typescript/types
 
-Shared TypeScript types and utilities used by both frontend and backend.
+TypeScript type definitions used by both frontend and backend.
 
-**Location:** `packages/shared/`
+**Location:** `packages/types/`
 
 **Exports:**
 - `Animal` - Base animal interface
@@ -161,8 +161,8 @@ Shared TypeScript types and utilities used by both frontend and backend.
 
 **Development:**
 ```sh
-pnpm shared:build  # Build TypeScript declarations
-pnpm shared:dev    # Watch mode
+pnpm types:build  # Build TypeScript declarations
+pnpm types:dev    # Watch mode
 ```
 
 ## 🛠️ Available Scripts
@@ -194,8 +194,8 @@ pnpm shared:dev    # Watch mode
 
 | Command | Description |
 |---------|-------------|
-| `pnpm shared:build` | Build shared package |
-| `pnpm shared:dev` | Run shared in watch mode |
+| `pnpm types:build` | Build types package |
+| `pnpm types:dev` | Run types in watch mode |
 
 ## 🔧 Tech Stack
 
@@ -273,7 +273,7 @@ All detailed documentation is organized in the **[docs/](./docs/)** folder for e
 - **[docs/APPS_VS_PACKAGES.md](./docs/APPS_VS_PACKAGES.md)** - Explains the apps/ vs packages/ structure and why it matters
 - **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** - Detailed architecture guide, design principles, and scaling
 - **[docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md)** - Comprehensive monorepo setup, workflow, and troubleshooting
-- **[docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)** - Complete guide to using shared types across the monorepo
+- **[docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)** - Complete guide to using types across the monorepo
 - **[docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md)** - Code quality tools, Biome setup, and standards
 - **[docs/ZED_SETUP.md](./docs/ZED_SETUP.md)** - Zed editor setup and configuration guide
 - **[docs/OPENAPI_DOCS.md](./docs/OPENAPI_DOCS.md)** - API documentation and OpenAPI specification
@@ -286,7 +286,7 @@ All detailed documentation is organized in the **[docs/](./docs/)** folder for e
 - 📐 Need architecture details? → [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
 - 💻 Setting up Zed editor? → [docs/ZED_SETUP.md](./docs/ZED_SETUP.md)
 - ✨ Code quality and linting? → [docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md)
-- 🔗 Using shared types? → [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)
+- 🔗 Using types across apps? → [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md)
 - 🔧 Having issues? → [docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md) (Troubleshooting section)
 
 ### Example API Calls
@@ -351,9 +351,9 @@ The web interface runs on `http://localhost:5173` and provides:
 2. Browser auto-reloads (Vite HMR)
 3. Check types: `pnpm web:build`
 
-**Shared Types:**
-1. Edit files in `packages/shared/src/`
-2. Build: `pnpm shared:build`
+**Types Package:**
+1. Edit files in `packages/types/src/`
+2. Build: `pnpm types:build`
 3. Both API and Web will pick up changes
 
 ### Adding Dependencies
@@ -369,8 +369,8 @@ pnpm --filter @hello-typescript/web add -D eslint
 
 **To a package:**
 ```sh
-# Add to shared
-pnpm --filter @hello-typescript/shared add lodash
+# Add to types
+pnpm --filter @hello-typescript/types add lodash
 ```
 
 **To the root (for tooling):**
@@ -382,25 +382,25 @@ The `-w` flag means "workspace root".
 
 ### Cross-Package Dependencies
 
-To use the shared package in apps:
+To use the types package in apps:
 
 1. Add to `package.json`:
    ```json
    {
      "dependencies": {
-       "@hello-typescript/shared": "workspace:*"
+       "@hello-typescript/types": "workspace:*"
      }
    }
    ```
 
 2. Import in code:
    ```typescript
-   import { Animal, Cat, Dog } from '@hello-typescript/shared'
+   import { Animal, Cat, Dog } from '@hello-typescript/types'
    ```
 
-3. Build the shared package first:
+3. Build the types package first:
    ```bash
-   pnpm shared:build
+   pnpm types:build
    ```
 
 ## 📝 Adding New Packages
@@ -419,7 +419,7 @@ Add `"name": "@hello-typescript/my-app"` to `package.json`.
 
 ### Adding a New Package
 
-Create a new shared package:
+Create a new reusable package:
 
 ```sh
 mkdir packages/my-package
@@ -466,8 +466,8 @@ kill -9 <PID>
 
 ### Module Not Found
 ```sh
-# Rebuild shared package
-pnpm shared:build
+# Rebuild types package
+pnpm types:build
 
 # Reinstall dependencies
 rm -rf node_modules apps/*/node_modules packages/*/node_modules pnpm-lock.yaml
@@ -489,20 +489,20 @@ All detailed documentation is in the [docs/](./docs/) folder:
 - [docs/MONOREPO_SETUP.md](./docs/MONOREPO_SETUP.md) - Detailed architecture and workflow
 - [docs/APPS_VS_PACKAGES.md](./docs/APPS_VS_PACKAGES.md) - Understanding the monorepo structure
 - [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) - Design principles and patterns
-- [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md) - Using shared types across apps
+- [docs/SHARED_TYPES.md](./docs/SHARED_TYPES.md) - Using types across apps
 - [docs/LINTING_AND_FORMATTING.md](./docs/LINTING_AND_FORMATTING.md) - Code quality standards
 - [docs/ZED_SETUP.md](./docs/ZED_SETUP.md) - Editor configuration
 - [docs/MIGRATION_SUMMARY.md](./docs/MIGRATION_SUMMARY.md) - Migration history
 
 ## 🏗️ Monorepo Best Practices
 
-1. **Apps vs Packages**: Keep deployable apps in `apps/`, reusable code in `packages/`
-2. **Build Order**: Always build packages before apps that depend on them
-3. **Shared Code**: Put common types and utilities in `packages/shared`
-4. **Independent Versions**: Each package can have its own version
-5. **Consistent Tooling**: Use the same TypeScript, linting, and formatting configs
-6. **Test Often**: Run `pnpm test` frequently to catch issues early
-7. **Commit Lock File**: Always commit `pnpm-lock.yaml` for reproducible builds
+- **Apps vs Packages**: Keep deployable apps in `apps/`, reusable code in `packages/`
+- **Build Order**: Always build packages before apps that depend on them
+- **Shared Code**: Put common types and utilities in `packages/types`
+- **Independent Versions**: Each package can have its own version
+- **Consistent Tooling**: Use the same TypeScript, linting, and formatting configs
+- **Test Often**: Run `pnpm test` frequently to catch issues early
+- **Commit Lock File**: Always commit `pnpm-lock.yaml` for reproducible builds
 
 ## 📖 Data Models
 
