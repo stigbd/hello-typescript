@@ -7,6 +7,9 @@ node_modules/
 dist/
 build/
 
+# Vite
+.vite/
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -25,7 +28,7 @@ pnpm-debug.log*
 Thumbs.db
 
 # IDE files
-.vscode/
+# .vscode/ and .zed/ are tracked for shared project settings
 .idea/
 *.swp
 

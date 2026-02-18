@@ -1,31 +1,27 @@
 {
-  "devDependencies": {
-    "@biomejs/biome": "2.3.11",
-    "@types/express": "^5.0.6",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^25.0.10",
-    "@types/supertest": "^6.0.3",
-    "@types/swagger-ui-express": "^4.1.8",
-    "express": "^5.2.1",
-    "jest": "^30.2.0",
-    "nodemon": "^3.1.11",
-    "supertest": "^7.2.2",
-    "ts-jest": "^29.4.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
+  "name": "hello-typescript-monorepo",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "nodemon --watch src --exec \"ts-node\" src/server.ts",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "format": "biome format --write ./src ./tests",
-    "lint": "biome check ./src ./tests"
+    "dev": "pnpm --parallel --filter './apps/*' dev",
+    "build": "pnpm --recursive build",
+    "test": "pnpm --recursive test",
+    "lint": "biome lint apps/ packages/",
+    "lint:fix": "biome lint --write apps/ packages/",
+    "format": "biome format --write apps/ packages/",
+    "format:check": "biome check apps/ packages/",
+    "check": "biome check --write apps/ packages/",
+    "api:dev": "pnpm --filter @hello-typescript/api dev",
+    "api:build": "pnpm --filter @hello-typescript/api build",
+    "api:test": "pnpm --filter @hello-typescript/api test",
+    "api:start": "pnpm --filter @hello-typescript/api start",
+    "web:dev": "pnpm --filter @hello-typescript/web dev",
+    "web:build": "pnpm --filter @hello-typescript/web build",
+    "web:preview": "pnpm --filter @hello-typescript/web preview",
+    "shared:build": "pnpm --filter @hello-typescript/shared build",
+    "shared:dev": "pnpm --filter @hello-typescript/shared dev"
   },
-  "dependencies": {
-    "@asteasolutions/zod-to-openapi": "^8.4.0",
-    "swagger-ui-express": "^5.0.1",
-    "zod": "^4.3.6"
+  "devDependencies": {
+    "@biomejs/biome": "2.3.11"
   }
 }
