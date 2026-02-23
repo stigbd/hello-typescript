@@ -3,34 +3,34 @@
   "vcs": {
     "enabled": true,
     "clientKind": "git",
-    "useIgnoreFile": true,
+    "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 100,
+    "lineWidth": 100
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedVariables": "error",
+        "noUnusedVariables": "error"
       },
       "style": {
         "useConst": "error",
-        "useTemplate": "warn",
+        "useTemplate": "warn"
       },
       "suspicious": {
         "noExplicitAny": "warn",
-        "noDoubleEquals": "warn",
-      },
-    },
+        "noDoubleEquals": "warn"
+      }
+    }
   },
   "javascript": {
     "formatter": {
@@ -41,23 +41,23 @@
       "semicolons": "always",
       "arrowParentheses": "always",
       "bracketSpacing": true,
-      "bracketSameLine": false,
-    },
+      "bracketSameLine": false
+    }
   },
   "json": {
     "formatter": {
       "enabled": true,
       "indentStyle": "space",
       "indentWidth": 2,
-      "trailingCommas": "none",
-    },
+      "trailingCommas": "none"
+    }
   },
   "assist": {
     "enabled": true,
     "actions": {
       "source": {
-        "organizeImports": "on",
-      },
-    },
-  },
+        "organizeImports": "on"
+      }
+    }
+  }
 }
